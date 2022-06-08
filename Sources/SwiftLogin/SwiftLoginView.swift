@@ -33,10 +33,10 @@ public struct LoginView<PostLoginView: View>: View {
                         .cornerRadius(10)
                 }
             }
+            }
+        
         }
-    }
-    public func login() {§
+   public func login() {
         fbManager.login(){  _ in }
     }
 }
-
