@@ -34,7 +34,7 @@ public struct LoginView<PostLoginView: View>: View {
                 }
             }
             }
-        
+         
         }
    public func login() {
         fbManager.login(){  _ in }
