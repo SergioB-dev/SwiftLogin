@@ -25,7 +25,11 @@ public struct LoginView<PostLoginView: View>: View {
             .padding()
             .textFieldStyle(.roundedBorder)
             Button(action: login){
-                
+                Text("Login")
+                    .padding()
+                    .frame(width: 150)
+                    .background(.blue)
+                    .cornerRadius(10)
             }
         }
     }
