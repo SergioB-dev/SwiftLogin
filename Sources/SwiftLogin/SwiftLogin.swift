@@ -26,10 +26,10 @@ public final class FirebaseAuthManager: ObservableObject {
         auth.signIn(withEmail: self.email, password: self.password) { fbResult, error in
             if error != nil {
                 completion(.failure(error!))
-                self.userLoggedIn = true
                 return
             }
             if let fbResult = fbResult {
+                self.userLoggedIn = true
                 completion(.success(fbResult))
             }
         }
