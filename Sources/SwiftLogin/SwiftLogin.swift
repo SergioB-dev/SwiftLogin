@@ -13,9 +13,12 @@ public struct SwiftLogin {
 }
 
 
-final class FirebaseAuthManager {
+public final class FirebaseAuthManager {
     private let auth = Auth.auth()
-    func login(email: String, password: String) {
+    
+    public init() { }
+    
+    public func login(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { x, y in
             print(x, y)
         }
