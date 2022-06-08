@@ -14,14 +14,18 @@ public struct LoginView<PostLoginView: View>: View {
     }
     @StateObject public var fbManager = FirebaseAuthManager()
     public var body: some View {
-        NavigationStack {
+        routerView()
+         
+        }
+    @ViewBuilder public func routerView() -> some View {
+        if fbManager.userLoggedIn {
+            postLoginView
+        } else {
             VStack {
                 Group {
                     TextField("Email", text: $fbManager.email)
                     TextField("Password", text: $fbManager.password)
-                    NavigationLink(destination: postLoginView, isActive: $fbManager.userLoggedIn) {
-                        Text("We are logged in!")
-                    }
+
                 }
                 .padding()
                 .textFieldStyle(.roundedBorder)
@@ -33,9 +37,9 @@ public struct LoginView<PostLoginView: View>: View {
                         .cornerRadius(10)
                 }
             }
-            }
-         
         }
+    }
+    
    public func login() {
         fbManager.login(){  _ in }
     }
