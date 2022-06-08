@@ -28,6 +28,7 @@ let package = Package(
             name: "SwiftLogin",
             dependencies: [
                 .product(name: "FirebaseAuth", package: "Firebase"),
+                .product(name: "FirebaseFirestore", package: "Firebase"),
             ]),
         .testTarget(
             name: "SwiftLoginTests",
