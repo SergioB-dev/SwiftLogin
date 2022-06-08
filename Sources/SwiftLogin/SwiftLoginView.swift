@@ -14,22 +14,24 @@ public struct LoginView<PostLoginView: View>: View {
     }
     @StateObject public var fbManager = FirebaseAuthManager()
     public var body: some View {
-        VStack {
-            Group {
-                TextField("Email", text: $fbManager.email)
-                TextField("Password", text: $fbManager.password)
-                NavigationLink(destination: postLoginView, isActive: $fbManager.userLoggedIn) {
-                    Text("We are logged in!")
+        NavigationStack {
+            VStack {
+                Group {
+                    TextField("Email", text: $fbManager.email)
+                    TextField("Password", text: $fbManager.password)
+                    NavigationLink(destination: postLoginView, isActive: $fbManager.userLoggedIn) {
+                        Text("We are logged in!")
+                    }
                 }
-            }
-            .padding()
-            .textFieldStyle(.roundedBorder)
-            Button(action: login){
-                Text("Login")
-                    .padding()
-                    .frame(width: 150)
-                    .background(.blue)
-                    .cornerRadius(10)
+                .padding()
+                .textFieldStyle(.roundedBorder)
+                Button(action: login){
+                    Text("Login")
+                        .padding()
+                        .frame(width: 150)
+                        .background(.blue)
+                        .cornerRadius(10)
+                }
             }
         }
     }
