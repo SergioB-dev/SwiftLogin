@@ -18,9 +18,15 @@ public final class FirebaseAuthManager {
     
     public init() {   }
     
-    public func login(email: String, password: String) {
-        auth.signIn(withEmail: email, password: password) { x, y in
-            print(x, y)
+    public func login(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        auth.signIn(withEmail: email, password: password) { fbResult, error in
+            if error != nil {
+                completion(.failure(error!))
+                return
+            }
+            if let fbResult = fbResult {
+                completion(.success(fbResult))
+            }
         }
     }
 }
