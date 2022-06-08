@@ -7,22 +7,30 @@
 
 import SwiftUI
 
-public struct LoginView: View {
-    public init() {}
+public struct LoginView<PostLoginView: View>: View {
+    let postLoginView: PostLoginView
+    public init(@ViewBuilder postLoginView: () -> PostLoginView) {
+        self.postLoginView = postLoginView()
+    }
     @StateObject public var fbManager = FirebaseAuthManager()
     public var body: some View {
         VStack {
             Group {
                 TextField("Email", text: $fbManager.email)
                 TextField("Password", text: $fbManager.password)
+                NavigationLink(destination: postLoginView, isActive: $fbManager.userLoggedIn) {
+                    Text("We are logged in!")
+                }
             }
+            .padding()
             .textFieldStyle(.roundedBorder)
+            Button(action: login){
+                
+            }
         }
+    }
+    private func login() {
+        fbManager.login(){ _ in }
     }
 }
 
-public struct LoginView_Previews: PreviewProvider {
-    static public var previews: some View {
-        LoginView()
-    }
-}

@@ -22,7 +22,7 @@ public final class FirebaseAuthManager: ObservableObject {
     
     public init() {   }
     
-    public func login(completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+    public func login(completion: @escaping (Result<AuthDataResult, Error>) -> Void)?) {
         auth.signIn(withEmail: self.email, password: self.password) { fbResult, error in
             if error != nil {
                 completion(.failure(error!))
