@@ -13,15 +13,20 @@ public struct SwiftLogin {
 }
 
 
-public final class FirebaseAuthManager {
+public final class FirebaseAuthManager: ObservableObject {
+    @Published public var userLoggedIn = false
+    @Published public var email = ""
+    @Published public var password = ""
+    
     private let auth = Auth.auth()
     
     public init() {   }
     
-    public func login(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-        auth.signIn(withEmail: email, password: password) { fbResult, error in
+    public func login(completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        auth.signIn(withEmail: self.email, password: self.password) { fbResult, error in
             if error != nil {
                 completion(.failure(error!))
+                self.userLoggedIn = true
                 return
             }
             if let fbResult = fbResult {
