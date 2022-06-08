@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftLogin",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -13,6 +13,11 @@ let package = Package(
             targets: ["SwiftLogin"]),
     ],
     dependencies: [
+        .package(
+            name: "Firebase",
+            url: "https://github.com/firebase/firebase-ios-sdk.git",
+            .upToNextMajor(from: "9.0.0")
+          ),
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],
@@ -21,7 +26,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftLogin",
-            dependencies: []),
+            dependencies: [
+                .product(name: "FirebaseAuth", package: "Firebase"),
+            ]),
         .testTarget(
             name: "SwiftLoginTests",
             dependencies: ["SwiftLogin"]),
