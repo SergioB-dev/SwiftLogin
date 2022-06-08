@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct LoginView: View {
+    public init() {}
     @StateObject public var fbManager = FirebaseAuthManager()
     public var body: some View {
         VStack {
