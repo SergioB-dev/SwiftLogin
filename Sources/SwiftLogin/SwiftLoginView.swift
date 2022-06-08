@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @StateObject var fbManager = FirebaseAuthManager()
-    var body: some View {
+public struct LoginView: View {
+    @StateObject public var fbManager = FirebaseAuthManager()
+    public var body: some View {
         VStack {
             Group {
                 TextField("Email", text: $fbManager.email)
@@ -20,8 +20,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
+public struct LoginView_Previews: PreviewProvider {
+    static public var previews: some View {
         LoginView()
     }
 }
