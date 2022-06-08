@@ -10,17 +10,27 @@ import FirebaseFirestore
 import FirebaseAuth
 import SwiftUI
 
-public final class FirebaseFirestoreManager: ObservableObject {
-    private let firestore = Firestore.firestore()
-    public init() {
-        
+open class FirebaseFirestoreProvider {
+    public let firestore = Firestore.firestore()
+    public let auth = Auth.auth()
+    public init() {}
+}
+
+public final class FirebaseFirestoreManager: FirebaseFirestoreProvider, ObservableObject {
+    public override init() {
+        super.init()
     }
     
     func createUserCollection(auth: Auth) throws {
         weak var user = auth.currentUser
         guard user != nil else { throw ClientErrors.noUser }
         if !userAlreadyExists(user!) {
-            firestore.collection("users").addDocument(data: ["uid":user!.uid])
+            firestore.collection("users").addDocument(data: [
+                "uid":user!.uid,
+                "email": user!.email ?? "",
+                "friends_uid" : []
+            ])
+            
         }
     }
     
@@ -43,7 +53,6 @@ public final class FirebaseFirestoreManager: ObservableObject {
     }
     
 }
-
 
 enum ClientErrors: Error {
     case noUser

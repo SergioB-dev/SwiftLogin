@@ -8,23 +8,25 @@
 import Foundation
 import FirebaseAuth
 
-public final class FirebaseAuthManager: ObservableObject {
+open class FirebaseAuthProvider {
+    public let auth = Auth.auth()
+    public init() {}
+}
+
+public final class FirebaseAuthManager: FirebaseAuthProvider, ObservableObject {
     @Published public var userLoggedIn = false
     @Published public var email = ""
     @Published public var password = ""
     
-    private let auth = Auth.auth()
-    
-    public init() {
-        if auth.currentUser != nil {
-            userLoggedIn = true
-        }
+    public override init() {
+        super.init()
     }
     
     // TODO: Refactor, get rid of unused callback
     public func login(completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
         auth.signIn(withEmail: self.email, password: self.password) { fbResult, error in
             if error != nil {
+                print(error!.localizedDescription)
                 completion(.failure(error!))
                 return
             }
@@ -53,5 +55,21 @@ public final class FirebaseAuthManager: ObservableObject {
     
     public func currentUser() -> User? {
         auth.currentUser
+    }
+    
+    public func logout() {
+        do {
+            try auth.signOut()
+            self.userLoggedIn = false
+        } catch {
+            print(error.localizedDescription)
+            return
+        }
+    }
+    
+    public func autoLogUser() {
+        if auth.currentUser != nil {
+            self.userLoggedIn = true
+        }
     }
 }
