@@ -28,7 +28,6 @@ public final class FirebaseFirestoreManager: FirebaseFirestoreProvider, Observab
             firestore.collection("users").addDocument(data: [
                 "uid":user!.uid,
                 "email": user!.email ?? "",
-                "friends_uid" : []
             ])
             
         }
